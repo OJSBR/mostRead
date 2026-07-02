@@ -4,6 +4,8 @@
 [![Version](https://img.shields.io/badge/version-3.5.0.1-blue)](version.xml)
 [![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)](LICENSE)
 
+**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/mostRead/releases/download/3.5.0.1/mostRead-3.5.0.1.tar.gz) · [OJS 3.4](https://github.com/OJSBR/mostRead/releases/download/3.4.0.1/mostRead-3.4.0.1.tar.gz) — or browse all [Releases](../../releases).
+
 A block plugin for **Open Journal Systems (OJS)** that adds a **"most read articles"**
 section to the frontend sidebar. By default the block shows the 5 most-viewed articles of
 the last 7 days, each with its title (linking to the article page) and an eye icon with the
