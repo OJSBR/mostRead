@@ -13,8 +13,8 @@
 <version>
 	<application>mostRead</application>
 	<type>plugins.blocks</type>
-	<release>3.5.0.1</release>
-	<date>2026-06-06</date>
+	<release>3.5.0.2</release>
+	<date>2026-07-16</date>
 	<lazy-load>1</lazy-load>
 	<class>MostReadBlockPlugin</class>
 </version>
