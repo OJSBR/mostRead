@@ -9,10 +9,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-06-09T10:36:44+02:00\n"
 "PO-Revision-Date: 2021-06-09T10:36:44+02:00\n"
-"Language: \n"
+"Language: pl\n"
+
 
 msgid "plugins.blocks.mostRead.displayName"
-msgstr "Blok Najczęściej czytane
+msgstr "Blok Najczęściej czytan"
 
 msgid "plugins.blocks.mostRead.description"
 msgstr "Ten plugin pokazuje najczęściej czytane w bocznej kolumnie."
@@ -21,7 +22,7 @@ msgid "plugins.blocks.mostRead.blockTitle"
 msgstr "Najczęściej czytane w ostatnim tygodniu"
 
 msgid "plugins.blocks.mostRead.settings.title"
-msgstr "Ustawienia bloku Najczęściej czytane
+msgstr "Ustawienia bloku Najczęściej czytan"
 
 msgid "plugins.blocks.mostRead.settings.days"
 msgstr "Ilość dni"

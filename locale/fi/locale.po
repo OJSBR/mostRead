@@ -9,7 +9,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-06-09T10:36:44+02:00\n"
 "PO-Revision-Date: 2021-06-09T10:36:44+02:00\n"
-"Language: \n"
+"Language: fi\n"
+
 
 msgid "plugins.blocks.mostRead.displayName"
 msgstr "Luetuimmat artikkelit -lohko"

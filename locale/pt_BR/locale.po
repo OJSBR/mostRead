@@ -9,7 +9,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-07-24T10:36:44+02:00\n"
 "PO-Revision-Date: 2024-07-24T10:36:44+02:00\n"
-"Language: \n"
+"Language: pt_BR\n"
+
 
 msgid "plugins.blocks.mostRead.displayName"
 msgstr "Bloco de artigos mais lidos"
@@ -30,7 +31,8 @@ msgid "plugins.blocks.mostRead.settings.blockTitle"
 msgstr "Título do bloco"
 
 msgid "plugins.blocks.mostRead.settings.saved"
-msgstr "Configurações do plug-in do bloco de artigos mais lido"
+msgstr "As configurações do plugin Bloco dos mais lidos foram salvas"
+
 msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
 msgstr "Informe a quantidade de dias a considerar."
 

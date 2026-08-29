@@ -1,43 +1,49 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-09T10:36:44+02:00\n"
-"PO-Revision-Date: 2021-06-09T10:36:44+02:00\n"
-"Language: en\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: zh_Hans\n"
 
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.displayName"
-msgstr "Most Read Block"
+msgstr "最多阅读区块"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.description"
-msgstr "This plugin shows most read objects in the sidebar."
+msgstr "该插件在侧边栏显示阅读量最高的内容。"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.blockTitle"
-msgstr "Most read last week"
+msgstr "上周最多阅读"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.title"
-msgstr "Most Read Block settings"
+msgstr "最多阅读区块设置"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.days"
-msgstr "Days count"
+msgstr "天数"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.blockTitle"
-msgstr "Block title"
+msgstr "区块标题"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.saved"
-msgstr "Most Read Block plugin settings saved"
+msgstr "最多阅读区块插件设置已保存"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
-msgstr "Please enter the number of days to consider."
+msgstr "请输入要统计的天数。"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.count"
-msgstr "Number of articles"
+msgstr "文章数量"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
-msgstr "Please enter a whole number greater than or equal to 1."
+msgstr "请输入大于或等于 1 的整数。"

@@ -1,43 +1,39 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-09T10:36:44+02:00\n"
-"PO-Revision-Date: 2021-06-09T10:36:44+02:00\n"
-"Language: en\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: ca\n"
 
 
 msgid "plugins.blocks.mostRead.displayName"
-msgstr "Most Read Block"
+msgstr "Bloc dels més llegits"
 
 msgid "plugins.blocks.mostRead.description"
-msgstr "This plugin shows most read objects in the sidebar."
+msgstr "Aquest connector mostra els objectes més llegits a la barra lateral."
 
 msgid "plugins.blocks.mostRead.blockTitle"
-msgstr "Most read last week"
+msgstr "Els més llegits la setmana passada"
 
 msgid "plugins.blocks.mostRead.settings.title"
-msgstr "Most Read Block settings"
+msgstr "Configuració del bloc dels més llegits"
 
 msgid "plugins.blocks.mostRead.settings.days"
-msgstr "Days count"
+msgstr "Nombre de dies"
 
 msgid "plugins.blocks.mostRead.settings.blockTitle"
-msgstr "Block title"
+msgstr "Títol del bloc"
 
 msgid "plugins.blocks.mostRead.settings.saved"
-msgstr "Most Read Block plugin settings saved"
+msgstr "S'ha desat la configuració del connector Bloc dels més llegits"
 
 msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
-msgstr "Please enter the number of days to consider."
+msgstr "Introduïu el nombre de dies que s'han de tenir en compte."
 
 msgid "plugins.blocks.mostRead.settings.count"
-msgstr "Number of articles"
+msgstr "Nombre d'articles"
 
 msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
-msgstr "Please enter a whole number greater than or equal to 1."
+msgstr "Introduïu un nombre enter més gran o igual que 1."

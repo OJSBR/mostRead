@@ -9,7 +9,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-07-24T10:36:44+02:00\n"
 "PO-Revision-Date: 2024-07-24T10:36:44+02:00\n"
-"Language: \n"
+"Language: fr_CA\n"
+
 
 msgid "plugins.blocks.mostRead.displayName"
 msgstr "Bloc &laquo;Le plus lu&raquo;"
@@ -21,16 +22,17 @@ msgid "plugins.blocks.mostRead.blockTitle"
 msgstr "Articles les plus lus la semaine dernière"
 
 msgid "plugins.blocks.mostRead.settings.title"
-msgstr ""
+msgstr "Réglages du bloc des plus consultés"
 
 msgid "plugins.blocks.mostRead.settings.days"
-msgstr ""
+msgstr "Nombre de jours"
 
 msgid "plugins.blocks.mostRead.settings.blockTitle"
-msgstr ""
+msgstr "Titre du bloc"
 
 msgid "plugins.blocks.mostRead.settings.saved"
-msgstr ""
+msgstr "Les réglages du module Bloc des plus consultés ont été enregistrés"
+
 msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
 msgstr "Veuillez saisir le nombre de jours à considérer."
 

@@ -1,43 +1,49 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-09T10:36:44+02:00\n"
-"PO-Revision-Date: 2021-06-09T10:36:44+02:00\n"
-"Language: en\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: da\n"
 
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.displayName"
-msgstr "Most Read Block"
+msgstr "Mest læste-blok"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.description"
-msgstr "This plugin shows most read objects in the sidebar."
+msgstr "Dette plugin viser de mest læste objekter i sidepanelet."
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.blockTitle"
-msgstr "Most read last week"
+msgstr "Mest læste i sidste uge"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.title"
-msgstr "Most Read Block settings"
+msgstr "Indstillinger for Mest læste-blokken"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.days"
-msgstr "Days count"
+msgstr "Antal dage"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.blockTitle"
-msgstr "Block title"
+msgstr "Bloktitel"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.saved"
-msgstr "Most Read Block plugin settings saved"
+msgstr "Indstillingerne for Mest læste-blokken er gemt"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
-msgstr "Please enter the number of days to consider."
+msgstr "Angiv antallet af dage, der skal tages i betragtning."
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.count"
-msgstr "Number of articles"
+msgstr "Antal artikler"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
-msgstr "Please enter a whole number greater than or equal to 1."
+msgstr "Angiv et helt tal større end eller lig med 1."

@@ -1,43 +1,49 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-09T10:36:44+02:00\n"
-"PO-Revision-Date: 2021-06-09T10:36:44+02:00\n"
-"Language: en\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: cs\n"
 
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.displayName"
-msgstr "Most Read Block"
+msgstr "Blok nejčtenějších"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.description"
-msgstr "This plugin shows most read objects in the sidebar."
+msgstr "Tento zásuvný modul zobrazuje nejčtenější položky v postranním panelu."
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.blockTitle"
-msgstr "Most read last week"
+msgstr "Nejčtenější za poslední týden"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.title"
-msgstr "Most Read Block settings"
+msgstr "Nastavení bloku nejčtenějších"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.days"
-msgstr "Days count"
+msgstr "Počet dnů"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.blockTitle"
-msgstr "Block title"
+msgstr "Název bloku"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.saved"
-msgstr "Most Read Block plugin settings saved"
+msgstr "Nastavení zásuvného modulu Blok nejčtenějších bylo uloženo"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
-msgstr "Please enter the number of days to consider."
+msgstr "Zadejte počet dnů, které se mají zohlednit."
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.count"
-msgstr "Number of articles"
+msgstr "Počet článků"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
-msgstr "Please enter a whole number greater than or equal to 1."
+msgstr "Zadejte celé číslo větší nebo rovné 1."

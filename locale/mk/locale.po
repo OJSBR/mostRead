@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: mk\n"
+
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.displayName"
+msgstr "Блок „Најчитани“"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.description"
+msgstr "Овој приклучок ги прикажува најчитаните објекти во страничната лента."
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.blockTitle"
+msgstr "Најчитани минатата недела"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.title"
+msgstr "Поставки на блокот „Најчитани“"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.days"
+msgstr "Број на денови"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.blockTitle"
+msgstr "Наслов на блокот"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.saved"
+msgstr "Поставките на приклучокот „Најчитани“ се зачувани"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
+msgstr "Внесете го бројот на денови што ќе се земат предвид."
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.count"
+msgstr "Број на трудови"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
+msgstr "Внесете цел број поголем или еднаков на 1."

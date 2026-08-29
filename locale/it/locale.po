@@ -9,7 +9,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2021-06-09T10:36:44+02:00\n"
 "PO-Revision-Date: 2021-06-09T10:36:44+02:00\n"
-"Language: \n"
+"Language: it\n"
+
 
 msgid "plugins.blocks.mostRead.displayName"
 msgstr "Blocco Più letti"
@@ -28,6 +29,9 @@ msgstr "Inserisci il numero di giorni da inserire nelle statistiche. Per esempio
 
 msgid "plugins.blocks.mostRead.settings.blockTitle"
 msgstr "Titolo del blocco"
+
+msgid "plugins.blocks.mostRead.settings.saved"
+msgstr "Le impostazioni del plugin Blocco dei più letti sono state salvate"
 
 msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
 msgstr "Inserisci il numero di giorni da considerare."

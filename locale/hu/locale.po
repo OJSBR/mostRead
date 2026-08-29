@@ -1,43 +1,49 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-09T10:36:44+02:00\n"
-"PO-Revision-Date: 2021-06-09T10:36:44+02:00\n"
-"Language: en\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: hu\n"
 
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.displayName"
-msgstr "Most Read Block"
+msgstr "Legolvasottabbak blokk"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.description"
-msgstr "This plugin shows most read objects in the sidebar."
+msgstr "Ez a bővítmény a legolvasottabb elemeket jeleníti meg az oldalsávban."
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.blockTitle"
-msgstr "Most read last week"
+msgstr "A múlt hét legolvasottabbjai"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.title"
-msgstr "Most Read Block settings"
+msgstr "Legolvasottabbak blokk beállításai"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.days"
-msgstr "Days count"
+msgstr "Napok száma"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.blockTitle"
-msgstr "Block title"
+msgstr "Blokk címe"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.saved"
-msgstr "Most Read Block plugin settings saved"
+msgstr "A Legolvasottabbak blokk bővítmény beállításai mentve"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
-msgstr "Please enter the number of days to consider."
+msgstr "Adja meg a figyelembe veendő napok számát."
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.count"
-msgstr "Number of articles"
+msgstr "Cikkek száma"
 
+#, fuzzy
 msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
-msgstr "Please enter a whole number greater than or equal to 1."
+msgstr "Adjon meg egy 1-nél nem kisebb egész számot."
