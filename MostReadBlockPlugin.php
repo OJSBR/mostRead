@@ -5,6 +5,7 @@
  *
  * Copyright (c) 2014-2024 Simon Fraser University
  * Copyright (c) 2003-2024 John Willinsky
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class MostReadBlockPlugin
@@ -19,7 +20,6 @@ namespace APP\plugins\blocks\mostRead;
 use APP\core\Application;
 use APP\facades\Repo;
 use APP\template\TemplateManager;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use PKP\core\JSONMessage;
 use PKP\facades\Locale;
@@ -31,7 +31,13 @@ use PKP\submission\PKPSubmission;
 class MostReadBlockPlugin extends BlockPlugin
 {
     /** Cache lifetime in seconds (1 day). */
-    private const CACHE_TTL = 60 * 60 * 24;
+    public const CACHE_TTL = 60 * 60 * 24;
+
+    /** Defaults and limits of the settings. */
+    public const DEFAULT_DAYS = 7;
+    public const MAX_DAYS = 3650;
+    public const DEFAULT_COUNT = 5;
+    public const MAX_COUNT = 50;
 
     /**
      * Install default settings on journal creation.
@@ -84,121 +90,150 @@ class MostReadBlockPlugin extends BlockPlugin
      */
     public function manage($args, $request)
     {
-        switch ($request->getUserVar('verb')) {
-            case 'settings':
-                $context = $request->getContext();
-                $templateMgr = TemplateManager::getManager($request);
-                $templateMgr->registerPlugin('function', 'plugin_url', $this->smartyPluginUrl(...));
-
-                $form = new MostReadSettingsForm($this, $context->getId());
-
-                if ($request->getUserVar('save')) {
-                    $form->readInputData();
-                    if ($form->validate()) {
-                        $form->execute();
-                        return new JSONMessage(true);
-                    }
-                } else {
-                    $form->initData();
-                }
-                return new JSONMessage(true, $form->fetch($request));
+        $context = $request->getContext();
+        if ($request->getUserVar('verb') !== 'settings' || !$context) {
+            return parent::manage($args, $request);
         }
-        return parent::manage($args, $request);
+
+        $form = new MostReadSettingsForm($this, $context->getId());
+        if ($request->getUserVar('save')) {
+            $form->readInputData();
+            if ($form->validate()) {
+                $form->execute();
+                return new JSONMessage(true);
+            }
+        } else {
+            $form->initData();
+        }
+
+        return new JSONMessage(true, $form->fetch($request));
     }
 
     /**
      * @copydoc BlockPlugin::getContents()
+     *
+     * The list is cached per journal and language as it is rendered - title,
+     * best id and count - so a page view costs one cache read, not one query per
+     * article.
+     *
+     * @param null|mixed $request
      */
     public function getContents($templateMgr, $request = null)
     {
-        $context = $request?->getContext();
+        $request ??= Application::get()->getRequest();
+        $context = $request->getContext();
         if (!$context) {
             return '';
         }
 
-        $contextId = $context->getId();
-
-        $metrics = Cache::remember(
-            $this->getCacheKey($contextId),
-            self::CACHE_TTL,
-            fn () => $this->loadMostRead($contextId)
-        );
-
+        $contextId = (int) $context->getId();
         $locale = Locale::getLocale();
 
-        $mostReadBlockTitle = (array) json_decode($this->getSetting($contextId, 'mostReadBlockTitle') ?? '');
-        $blockTitle = $mostReadBlockTitle[$locale] ?? '';
-        $templateMgr->assign('blockTitle', $blockTitle);
+        $items = Cache::remember(
+            $this->getCacheKey($contextId, $locale),
+            self::CACHE_TTL,
+            fn () => $this->loadMostRead($contextId, $locale)
+        );
 
         $mostRead = [];
-        foreach ($metrics as $metric) {
-            $submission = Repo::submission()->get($metric['submissionId']);
-            if (!$submission) {
-                continue;
-            }
-            $publication = $submission->getCurrentPublication();
-            if (!$publication || (int) $publication->getData('status') !== PKPSubmission::STATUS_PUBLISHED) {
-                continue;
-            }
+        foreach ($items as $item) {
             $mostRead[] = [
-                'url' => $request->url($context->getPath(), 'article', 'view', [$submission->getBestId()]),
-                'metric' => $metric['metric'],
-                'title' => $publication->getLocalizedFullTitle($locale, 'html'),
+                'url' => $request->url($context->getPath(), 'article', 'view', [$item['bestId']]),
+                'metric' => $item['metric'],
+                'title' => $item['title'],
             ];
         }
 
-        $templateMgr->assign('mostRead', $mostRead);
+        $titles = self::decodeTitles($this->getSetting($contextId, 'mostReadBlockTitle'));
+        $templateMgr->assign([
+            'blockTitle' => $titles[$locale] ?? '',
+            'mostRead' => $mostRead,
+        ]);
+
         return parent::getContents($templateMgr, $request);
     }
 
     /**
-     * Build the cache key for a given context.
+     * The block titles per locale, from the stored JSON.
+     *
+     * @return array<string, string>
      */
-    public function getCacheKey(int $contextId): string
+    public static function decodeTitles($stored): array
     {
-        return "plugins.blocks.mostRead.{$contextId}";
+        $titles = json_decode((string) $stored, true);
+
+        return is_array($titles) ? array_filter(array_map(fn ($title) => is_string($title) ? trim($title) : '', $titles), 'strlen') : [];
     }
 
     /**
-     * Clear the cached metrics for a given context.
+     * A setting read as a whole number within its limits, or its default.
+     */
+    public static function boundedInt($value, int $default, int $max): int
+    {
+        return ctype_digit(trim((string) $value)) && (int) $value >= 1 ? min((int) $value, $max) : $default;
+    }
+
+    /**
+     * Build the cache key for a context and a locale.
+     */
+    public function getCacheKey(int $contextId, string $locale): string
+    {
+        return "plugins.blocks.mostRead.{$contextId}.{$locale}";
+    }
+
+    /**
+     * Clear the cached lists of a context, in every language it offers.
      */
     public function clearCache(int $contextId): void
     {
-        Cache::forget($this->getCacheKey($contextId));
+        $context = Application::getContextDAO()->getById($contextId);
+        foreach ($context ? (array) $context->getSupportedLocales() : [] as $locale) {
+            Cache::forget($this->getCacheKey($contextId, $locale));
+        }
     }
 
     /**
-     * Query the most read submissions for a context.
+     * Query the most read published articles of a context, ready to display.
      *
-     * @return array<int, array{submissionId: int, metric: int}>
+     * @return array<int, array{bestId: string|int, metric: int, title: string}>
      */
-    public function loadMostRead(int $contextId): array
+    public function loadMostRead(int $contextId, string $locale): array
     {
-        $mostReadDays = (int) $this->getSetting($contextId, 'mostReadDays');
-        if (empty($mostReadDays)) {
-            $mostReadDays = 7;
-        }
-        $dayString = '-' . $mostReadDays . ' days';
+        $days = self::boundedInt($this->getSetting($contextId, 'mostReadDays'), self::DEFAULT_DAYS, self::MAX_DAYS);
+        $count = self::boundedInt($this->getSetting($contextId, 'mostReadCount'), self::DEFAULT_COUNT, self::MAX_COUNT);
 
-        $mostReadCount = (int) $this->getSetting($contextId, 'mostReadCount');
-        if ($mostReadCount < 1) {
-            $mostReadCount = 5;
-        }
-
-        $mostRead = app()->get('publicationStats')->getTotals([
-            'dateStart' => date('Y-m-d', strtotime($dayString)),
+        $totals = $this->getStatsService()->getTotals([
+            'dateStart' => date('Y-m-d', strtotime('-' . $days . ' days')),
             'contextIds' => [$contextId],
-            'count' => $mostReadCount,
+            'count' => $count,
             'assocTypes' => [Application::ASSOC_TYPE_SUBMISSION_FILE],
         ]);
 
-        return (new Collection($mostRead))
-            ->map(fn ($result) => [
-                'submissionId' => $result->submission_id,
-                'metric' => $result->metric,
-            ])
-            ->filter(fn ($result) => $result['submissionId'] && $result['metric'])
-            ->values()
-            ->toArray();
+        $items = [];
+        foreach ($totals as $row) {
+            if (!$row->submission_id || !$row->metric) {
+                continue;
+            }
+            $submission = Repo::submission()->get((int) $row->submission_id);
+            $publication = $submission?->getCurrentPublication();
+            if (!$publication || (int) $publication->getData('status') !== PKPSubmission::STATUS_PUBLISHED) {
+                continue;
+            }
+            $items[] = [
+                'bestId' => $submission->getBestId(),
+                'metric' => (int) $row->metric,
+                'title' => (string) $publication->getLocalizedFullTitle($locale, 'html'),
+            ];
+        }
+
+        return $items;
+    }
+
+    /**
+     * The publication statistics service of this OJS version.
+     */
+    protected function getStatsService()
+    {
+        return app()->get('publicationStats');
     }
 }

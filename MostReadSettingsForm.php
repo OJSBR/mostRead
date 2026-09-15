@@ -5,6 +5,7 @@
  *
  * Copyright (c) 2014-2024 Simon Fraser University
  * Copyright (c) 2003-2024 John Willinsky
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class MostReadSettingsForm
@@ -18,7 +19,6 @@ namespace APP\plugins\blocks\mostRead;
 
 use APP\template\TemplateManager;
 use PKP\form\Form;
-use PKP\form\validation\FormValidator;
 use PKP\form\validation\FormValidatorCSRF;
 use PKP\form\validation\FormValidatorCustom;
 use PKP\form\validation\FormValidatorPost;
@@ -44,10 +44,20 @@ class MostReadSettingsForm extends Form
 
         parent::__construct($plugin->getTemplateResource('settingsForm.tpl'));
 
-        $this->addCheck(new FormValidator($this, 'mostReadDays', 'required', 'plugins.blocks.mostRead.settings.mostReadDaysRequired'));
-        $this->addCheck(new FormValidatorCustom($this, 'mostReadCount', 'optional', 'plugins.blocks.mostRead.settings.mostReadCountInvalid', fn ($value) => ctype_digit((string) $value) && (int) $value >= 1));
+        $this->addCheck(new FormValidatorCustom($this, 'mostReadDays', 'required', 'plugins.blocks.mostRead.settings.mostReadDaysRequired', fn ($value) => self::isWholeNumberWithin($value, MostReadBlockPlugin::MAX_DAYS)));
+        $this->addCheck(new FormValidatorCustom($this, 'mostReadCount', 'optional', 'plugins.blocks.mostRead.settings.mostReadCountInvalid', fn ($value) => self::isWholeNumberWithin($value, MostReadBlockPlugin::MAX_COUNT)));
         $this->addCheck(new FormValidatorPost($this));
         $this->addCheck(new FormValidatorCSRF($this));
+    }
+
+    /**
+     * Whether a submitted value is a whole number from 1 to $max.
+     */
+    public static function isWholeNumberWithin($value, int $max): bool
+    {
+        $value = trim((string) $value);
+
+        return ctype_digit($value) && (int) $value >= 1 && (int) $value <= $max;
     }
 
     /**
@@ -55,11 +65,10 @@ class MostReadSettingsForm extends Form
      */
     public function initData()
     {
-        $mostReadBlockTitle = (array) json_decode($this->_plugin->getSetting($this->_contextId, 'mostReadBlockTitle') ?? '');
         $this->_data = [
             'mostReadDays' => $this->_plugin->getSetting($this->_contextId, 'mostReadDays'),
             'mostReadCount' => $this->_plugin->getSetting($this->_contextId, 'mostReadCount'),
-            'mostReadBlockTitle' => $mostReadBlockTitle,
+            'mostReadBlockTitle' => MostReadBlockPlugin::decodeTitles($this->_plugin->getSetting($this->_contextId, 'mostReadBlockTitle')),
         ];
     }
 
@@ -88,10 +97,10 @@ class MostReadSettingsForm extends Form
      */
     public function execute(...$functionArgs)
     {
-        $mostReadBlockTitle = json_encode($this->getData('mostReadBlockTitle'));
-        $this->_plugin->updateSetting($this->_contextId, 'mostReadDays', $this->getData('mostReadDays'), 'string');
-        $this->_plugin->updateSetting($this->_contextId, 'mostReadCount', $this->getData('mostReadCount'), 'string');
-        $this->_plugin->updateSetting($this->_contextId, 'mostReadBlockTitle', $mostReadBlockTitle, 'string');
+        $titles = array_map(fn ($title) => trim(strip_tags((string) $title)), (array) $this->getData('mostReadBlockTitle'));
+        $this->_plugin->updateSetting($this->_contextId, 'mostReadDays', (string) (int) $this->getData('mostReadDays'), 'string');
+        $this->_plugin->updateSetting($this->_contextId, 'mostReadCount', trim((string) $this->getData('mostReadCount')) === '' ? '' : (string) (int) $this->getData('mostReadCount'), 'string');
+        $this->_plugin->updateSetting($this->_contextId, 'mostReadBlockTitle', json_encode(array_filter($titles, 'strlen')), 'string');
 
         // Empty the current cache so new settings take effect immediately
         $this->_plugin->clearCache($this->_contextId);
