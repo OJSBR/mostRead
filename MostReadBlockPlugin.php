@@ -19,7 +19,6 @@ namespace APP\plugins\blocks\mostRead;
 
 use APP\core\Application;
 use APP\facades\Repo;
-use APP\template\TemplateManager;
 use Illuminate\Support\Facades\Cache;
 use PKP\core\JSONMessage;
 use PKP\facades\Locale;
@@ -42,32 +41,36 @@ class MostReadBlockPlugin extends BlockPlugin
     /**
      * Install default settings on journal creation.
      */
-    public function getContextSpecificPluginSettingsFile()
+    public function getContextSpecificPluginSettingsFile(): string
     {
         return $this->getPluginPath() . '/settings.xml';
     }
 
     /**
-     * Get the display name of this plugin.
+     * Name shown in the plugins list.
      */
-    public function getDisplayName()
+    public function getDisplayName(): string
     {
         return __('plugins.blocks.mostRead.displayName');
     }
 
     /**
-     * Get a description of the plugin.
+     * Description shown in the plugins list.
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return __('plugins.blocks.mostRead.description');
     }
 
     /**
-     * @copydoc Plugin::getActions()
+     * Add the settings action to the plugin entry in the plugins list.
      */
-    public function getActions($request, $actionArgs)
+    public function getActions($request, $actionArgs): array
     {
+        // The settings belong to a journal; there is nothing to configure site-wide.
+        if (!$request->getContext()) {
+            return parent::getActions($request, $actionArgs);
+        }
         $router = $request->getRouter();
         return array_merge(
             $this->getEnabled() ? [
@@ -86,9 +89,9 @@ class MostReadBlockPlugin extends BlockPlugin
     }
 
     /**
-     * @copydoc Plugin::manage()
+     * Show and save the settings form.
      */
-    public function manage($args, $request)
+    public function manage($args, $request): JSONMessage
     {
         $context = $request->getContext();
         if ($request->getUserVar('verb') !== 'settings' || !$context) {
@@ -110,7 +113,7 @@ class MostReadBlockPlugin extends BlockPlugin
     }
 
     /**
-     * @copydoc BlockPlugin::getContents()
+     * Render the block for the journal of the request.
      *
      * The list is cached per journal and language as it is rendered - title,
      * best id and count - so a page view costs one cache read, not one query per
@@ -118,7 +121,7 @@ class MostReadBlockPlugin extends BlockPlugin
      *
      * @param null|mixed $request
      */
-    public function getContents($templateMgr, $request = null)
+    public function getContents($templateMgr, $request = null): string
     {
         $request ??= Application::get()->getRequest();
         $context = $request->getContext();
