@@ -6,10 +6,12 @@
  *
  * Functional tests: the settings and their limits, and the block a reader sees.
  *
- * Parameters (--env): contextPath; adminUser, adminPassword (a journal manager;
- * captcha on login must be off for the run). The block must be enabled and in
- * the sidebar; the reader test needs published articles with usage statistics
- * in the configured window. Settings touched are restored at the end.
+ * Parameters (--env): contextPath, adminUser, adminPassword (captcha on login
+ * must be off for the run). The defaults match the data set of PKP's
+ * continuous integration, and the first test enables the plugin when it is off.
+ * Settings touched are put back as they were. The reader test also needs
+ * withStatistics=1: the block in the sidebar and published articles with usage
+ * statistics in the configured window, which the CI data set does not have.
  * Selectors use names and ids, so the spec runs in any language.
  */
 
@@ -17,74 +19,144 @@ describe('Most Read block plugin', function() {
 	const contextPath = Cypress.env('contextPath') || 'publicknowledge';
 	const adminUser = Cypress.env('adminUser') || 'admin';
 	const adminPassword = Cypress.env('adminPassword') || 'admin';
+	const withStatistics = Cypress.env('withStatistics');
 
+	const rowName = 'mostreadblockplugin';
 	const settingsForm = 'form[id="mostReadSettingsForm"]';
 	const field = (name) => settingsForm + ' input[name="' + name + '"]';
-	let original = null;
 
-	const login = () => {
+	// ---- OJSBR spec helpers (padrão v2): work on OJS/OMP 3.3, 3.4 and 3.5 and in PKP's CI ----
+
+	const pageUrl = (path) => '/index.php/' + contextPath + (path ? '/' + path : '');
+
+	// Same as PKP's cy.waitJQuery(), which the support files of OJS 3.3 test sites may lack.
+	// The Plugins tab can keep requests open for a while (the plugin gallery), hence the timeout.
+	const waitJQuery = () => cy.window().its('jQuery.active', {timeout: 60000}).should('eq', 0);
+
+	// Requests carry the browser's User-Agent: OJS 3.3 drops a session whose agent changes.
+	const request = (options) => cy.window({log: false}).then((win) => cy.request(Object.assign(
+		typeof options === 'string' ? {url: options} : options,
+		{headers: Object.assign({'User-Agent': win.navigator.userAgent}, (typeof options === 'string' ? {} : options.headers) || {})}
+	)));
+
+	// Signs in through requests (the login page can re-render while it is typed into), then
+	// falls back to the form when the session did not stick (OJS 3.3 cookie handling).
+	const login = (username, password) => {
 		cy.clearCookies();
-		cy.visit('/index.php/' + contextPath + '/login');
-		cy.get('input[id=username]').clear().type(adminUser, {delay: 0});
-		cy.get('input[id=password]').clear().type(adminPassword, {delay: 0, log: false});
-		cy.get('form[id=login] button').click();
-		cy.get('form[id=login]', {timeout: 30000}).should('not.exist');
+		request(pageUrl('login')).then((response) => {
+			const token = /name="csrfToken" value="([^"]+)"/.exec(response.body)[1];
+			// The form posts to the URL with the language: a redirect would turn the POST into a GET.
+			const action = /<form[^>]*id="login"[^>]*action="([^"]+)"/.exec(response.body)[1];
+			request({method: 'POST', url: action, form: true, body: {csrfToken: token, username: username, password: password}, log: false});
+		});
+		cy.visit(pageUrl('submissions') + '?reload=' + Date.now());
+		cy.get('body').then(($body) => {
+			if ($body.find('form#login').length) {
+				cy.get('form#login input[name="username"]').type(username, {delay: 0});
+				cy.get('form#login input[name="password"]').type(password, {delay: 0, log: false});
+				cy.get('form#login').submit();
+				cy.get('form#login', {timeout: 30000}).should('not.exist');
+			}
+		});
 	};
 
-	const openSettings = () => {
-		cy.visit('/index.php/' + contextPath + '/management/settings/website');
+	// REST API calls made from the page itself, so they carry the browser's own session.
+	const api = (path, options = {}) => cy.window({log: false}).then((win) => cy.wrap(
+		win.fetch(path, Object.assign({credentials: 'same-origin'}, options)).then((response) => {
+			if (!response.ok) {
+				return response.text().then((text) => {
+					throw new Error(path + ' answered ' + response.status + ': ' + text.slice(0, 300));
+				});
+			}
+			return response.json();
+		}),
+		{log: false, timeout: 30000}
+	));
+
+	// The website settings page on its Plugins tab (a new query string forces a load). Load it
+	// once per test: loading it again while its plugin gallery request is pending stalls the
+	// web server of PKP's CI; API calls and settings modals work on the page already open.
+	const openPluginsTab = () => {
+		cy.visit(pageUrl('management/settings/website') + '?reload=' + Date.now() + '#plugins');
 		cy.get('button[id="plugins-button"]', {timeout: 60000}).click();
-		cy.waitJQuery();
-		cy.get('tr[id*="mostreadblockplugin"] a.show_extras', {timeout: 30000}).click();
-		cy.get('a[id*="mostreadblockplugin-settings"]', {timeout: 30000}).click();
-		cy.waitJQuery();
-		cy.get(settingsForm, {timeout: 30000}).should('exist');
+		cy.get('button[id="plugins-button"]').should('have.attr', 'aria-selected', 'true');
+		waitJQuery();
 	};
+
+	// Enables the plugin in the grid when it is off (never turns it off).
+	const enablePlugin = (rowName) => {
+		cy.get('input[id^="select-cell-' + rowName + '-enabled"]', {timeout: 30000}).then(($checkbox) => {
+			if (!$checkbox.is(':checked')) {
+				cy.wrap($checkbox).click();
+				waitJQuery();
+			}
+		});
+		cy.get('input[id^="select-cell-' + rowName + '-enabled"]').should('be.checked');
+	};
+
+	// Opens the settings modal from the grid, without reloading the page: a reload right
+	// after saving can stall the web server of PKP's CI. The form is fetched each time.
+	const openPluginSettings = (rowName, formSelector) => {
+		cy.get('a[id*="-row-' + rowName + '-settings-button-"]', {timeout: 30000}).then(($link) => {
+			if (!$link.is(':visible')) {
+				cy.get('tr[id$="-row-' + rowName + '"] a.show_extras').first().click();
+			}
+		});
+		// The grid may still be animating the extras row: the link is clicked once it exists.
+		cy.get('a[id*="-row-' + rowName + '-settings-button-"]').first().click({force: true});
+		waitJQuery();
+		cy.window().should((win) => {
+			expect(win.jQuery(formSelector).data('pkp.handler')).to.exist;
+		});
+	};
+
+	// ---- end of helpers ----
+
+	const openSettings = () => openPluginSettings(rowName, settingsForm);
 
 	const fill = (days, count) => {
-		cy.get(field('mostReadDays')).invoke('val', '').type(days, {delay: 0});
-		cy.get(field('mostReadCount')).invoke('val', '');
-		if (count) {
-			cy.get(field('mostReadCount')).type(count, {delay: 0});
-		}
+		cy.get(field('mostReadDays')).invoke('val', days || '');
+		cy.get(field('mostReadCount')).invoke('val', count || '');
 		cy.get(settingsForm + ' button[id^="submitFormButton-"]').click({force: true});
-		cy.waitJQuery();
+		waitJQuery();
 	};
 
 	it('Refuses days and counts outside their limits and saves valid ones', function() {
-		login();
+		login(adminUser, adminPassword);
+		openPluginsTab();
+		enablePlugin(rowName);
 		openSettings();
+
 		cy.get(field('mostReadDays')).invoke('val').then((days) => {
-			cy.get(field('mostReadCount')).invoke('val').then((count) => { original = {days, count}; });
+			cy.get(field('mostReadCount')).invoke('val').then((count) => {
+				fill('seven', '3');
+				cy.get(settingsForm).should('exist').find('.error, .pkp_form_error').should('exist');
+
+				fill('3650', '51');
+				cy.get(settingsForm).should('exist').find('.error, .pkp_form_error').should('exist');
+
+				fill('3650', '2');
+				cy.get(settingsForm).should('not.exist');
+				openSettings();
+				cy.get(field('mostReadDays')).should('have.value', '3650');
+				cy.get(field('mostReadCount')).should('have.value', '2');
+
+				// Put them back as they were.
+				fill(days || '7', count);
+				cy.get(settingsForm).should('not.exist');
+				openSettings();
+				cy.get(field('mostReadDays')).should('have.value', days || '7');
+			});
 		});
-
-		fill('seven', '3');
-		cy.get(settingsForm, {timeout: 15000}).should('exist').find('.error, .pkp_form_error').should('exist');
-
-		fill('3650', '51');
-		cy.get(settingsForm, {timeout: 15000}).should('exist').find('.error, .pkp_form_error').should('exist');
-
-		fill('3650', '2');
-		cy.get(settingsForm).should('not.exist');
-		openSettings();
-		cy.get(field('mostReadDays')).should('have.value', '3650');
-		cy.get(field('mostReadCount')).should('have.value', '2');
 	});
 
-	it('Shows the reader at most the configured number of published articles', function() {
-		cy.visit('/index.php/' + contextPath, {headers: {Cookie: 'OJSSID=cypress' + Date.now()}});
-		cy.get('.block_most_read .most_read_article', {timeout: 30000}).should('have.length.within', 1, 2).each(($item) => {
+	(withStatistics ? it : it.skip)('Shows the reader published articles with their counts', function() {
+		cy.visit(pageUrl('') + '?reload=' + Date.now());
+		cy.get('.block_most_read .most_read_article', {timeout: 30000}).should('have.length.at.least', 1).each(($item) => {
 			cy.wrap($item).find('a').should('have.attr', 'href').and('match', /\/article\/view\//);
 			cy.wrap($item).find('.most_read_article_journal').invoke('text').should('match', /\d/);
+			// Only the safe HTML of a title reaches the page.
+			cy.wrap($item).find('.most_read_article_title script').should('have.length', 0);
 		});
-	});
-
-	after(function() {
-		if (original) {
-			login();
-			openSettings();
-			fill(original.days || '7', original.count);
-			cy.get(settingsForm, {timeout: 15000}).should('not.exist');
-		}
 	});
 });

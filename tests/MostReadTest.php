@@ -15,8 +15,12 @@ namespace APP\plugins\blocks\mostRead\tests;
 
 use APP\plugins\blocks\mostRead\MostReadBlockPlugin;
 use APP\plugins\blocks\mostRead\MostReadSettingsForm;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PKP\tests\PKPTestCase;
 
-class MostReadTest extends TestCase
+#[CoversClass(MostReadBlockPlugin::class)]
+#[CoversClass(MostReadSettingsForm::class)]
+class MostReadTest extends PKPTestCase
 {
     public function testSettingsFallBackToTheirDefaultsAndLimits(): void
     {
@@ -64,5 +68,37 @@ class MostReadTest extends TestCase
         $template = (string) file_get_contents(dirname(__DIR__) . '/templates/block.tpl');
         $this->assertStringContainsString('{$blockTitle|escape}', $template);
         $this->assertStringContainsString('{$submission.url|escape}', $template);
+        // Titles carry HTML in 3.5 (italics, sub/superscript): only the safe part is printed.
+        $this->assertStringContainsString('{$submission.title|strip_unsafe_html}', $template);
+    }
+
+    public function testTheSiteLevelHasNoSettingsToOpen(): void
+    {
+        $request = new class () {
+            public function getContext()
+            {
+                return null;
+            }
+
+            public function getUserVar($name)
+            {
+                return $name === 'verb' ? 'settings' : null;
+            }
+
+            public function getRouter()
+            {
+                throw new \RuntimeException('The site level must not build a settings URL.');
+            }
+        };
+        $plugin = new class () extends MostReadBlockPlugin {
+            public function getEnabled($contextId = null)
+            {
+                return true;
+            }
+        };
+
+        $this->assertSame([], array_filter($plugin->getActions($request, []), fn ($action) => $action->getId() === 'settings'));
+        $this->expectExceptionMessage('Unhandled management action!');
+        $plugin->manage([], $request);
     }
 }

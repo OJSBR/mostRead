@@ -15,7 +15,7 @@
 		<ul class="most_read">
 			{foreach from=$mostRead item=submission}
 				<li class="most_read_article">
-					<div class="most_read_article_title"><a href="{$submission.url|escape}">{$submission.title}</a></div>
+					<div class="most_read_article_title"><a href="{$submission.url|escape}">{$submission.title|strip_unsafe_html}</a></div>
 					<div class="most_read_article_journal"><span class="fa fa-eye"></span> {$submission.metric|escape}</div>
 				</li>
 			{/foreach}

@@ -1,10 +1,10 @@
 # Most Read — OJS block plugin
 
 [![OJS](https://img.shields.io/badge/OJS-3.4%20%7C%203.5-brightgreen)](https://pkp.sfu.ca/ojs/)
-[![Version](https://img.shields.io/badge/version-3.5.0.5-blue)](version.xml)
+[![Version](https://img.shields.io/badge/version-3.5.0.6-blue)](version.xml)
 [![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)](LICENSE)
 
-**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/mostRead/releases/download/3.5.0.5/mostRead-3.5.0.5.tar.gz) · [OJS 3.4](https://github.com/OJSBR/mostRead/releases/download/3.4.0.3/mostRead-3.4.0.3.tar.gz) — or browse all [Releases](../../releases).
+**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/mostRead/releases/download/3.5.0.6/mostRead-3.5.0.6.tar.gz) · [OJS 3.4](https://github.com/OJSBR/mostRead/releases/download/3.4.0.4/mostRead-3.4.0.4.tar.gz) — or browse all [Releases](../../releases).
 
 A block plugin for **Open Journal Systems (OJS)** that adds a **"most read articles"**
 section to the frontend sidebar. By default the block shows the 5 most-viewed articles of
@@ -19,8 +19,8 @@ full-text view count. The journal manager can set a custom heading and a custom 
 
 | OJS version | Branch | Plugin release |
 |-------------|--------|----------------|
-| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 3.5.0.5 |
-| OJS 3.4.x   | [`stable-3_4_0`](../../tree/stable-3_4_0) | 3.4.0.3 |
+| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 3.5.0.6 |
+| OJS 3.4.x   | [`stable-3_4_0`](../../tree/stable-3_4_0) | 3.4.0.4 |
 
 Both branches ship the same code; the locale folders follow each OJS line (38 languages).
 
@@ -52,20 +52,24 @@ In the plugin settings the journal manager sets:
 
 ## Tests
 
-- **PHP suite** (`tests/`, 21 tests): the classes against the installed PKP, the limits of the
-  settings, the stored titles, the cache key per language, rendering without a query per
-  article, escaping in the block, and the 38 translations. Run either way from the OJS root:
+- **PHPUnit** (`tests/*Test.php`, on `PKP\tests\PKPTestCase`): the classes against the installed
+  PKP, the plugin found by PKP's plugin registry, the limits of the settings, the stored titles,
+  the cache key per language, rendering without a query per article, escaping in the block
+  (titles keep only safe HTML), the site level without settings, and the 38 translations. From the
+  OJS root:
 
   ```bash
-  php plugins/blocks/mostRead/tests/run.php
   lib/pkp/lib/vendor/bin/phpunit --configuration lib/pkp/tests/phpunit.xml --no-coverage "$PWD/plugins/blocks/mostRead/tests"
   ```
 
-- **Cypress** (`cypress/tests/functional/MostRead.cy.js`): days and counts outside the limits
-  refused, valid ones saved, and the block a reader sees; settings restored at the end.
-  Captcha on login must be off for the run.
-- Verified on OJS 3.5.0.3 and 3.4.0.10: the block in two languages with the configured count,
-  the title escaped, the Cypress spec green on both.
+- **Cypress** (`cypress/tests/functional/MostRead.cy.js`, run by
+  [pkp-github-actions](https://github.com/pkp/pkp-github-actions) on every push): enables the
+  plugin, refuses days and counts outside the limits, saves valid ones and puts the settings back.
+  With `withStatistics=1` (the block in the sidebar and published articles with usage statistics)
+  it also checks the block a reader sees.
+- Verified on OJS 3.5.0.3 and 3.4.0.10.
+
+Tests are kept in the repository and are not part of the release package.
 
 ## Credits & authorship
 
@@ -74,6 +78,12 @@ In the plugin settings the journal manager sets:
   (**[@ajnyga](https://github.com/ajnyga)**, <https://github.com/ajnyga/mostRead>), with
   contributions by **[@zielaq](https://github.com/zielaq)**.
 - Distributed under the **GNU GPL v3**, consistent with the original licensing.
+
+## AI use
+
+Generative AI (Claude, by Anthropic) was used to write and run tests, improve the code and bring
+it in line with PKP standards. Every change is reviewed and tested by OJSBR, which is responsible
+for the published releases.
 
 ## Contributing
 
@@ -101,8 +111,8 @@ acessos. O gestor pode definir um título personalizado e a janela de dias.
 
 | Versão do OJS | Branch | Release do plugin |
 |---------------|--------|-------------------|
-| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 3.5.0.5 |
-| OJS 3.4.x     | [`stable-3_4_0`](../../tree/stable-3_4_0) | 3.4.0.3 |
+| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 3.5.0.6 |
+| OJS 3.4.x     | [`stable-3_4_0`](../../tree/stable-3_4_0) | 3.4.0.4 |
 
 As duas branches têm o mesmo código; as pastas de idioma seguem cada linha do OJS (38 idiomas).
 
@@ -120,9 +130,15 @@ por idioma, em texto puro. A lista é guardada em cache por revista e idioma já
 
 ### Testes
 
-Suíte PHP em `tests/` (21 testes, pelo `tests/run.php` ou pelo PHPUnit do PKP) e Cypress em
-`cypress/tests/functional/`. Verificado no OJS 3.5.0.3 e 3.4.0.10: bloco em dois idiomas com a
-quantidade configurada, título escapado e valores fora dos limites recusados.
+PHPUnit em `tests/` (sobre `PKP\tests\PKPTestCase`) e Cypress em `cypress/tests/functional/`
+(rodado pelo [pkp-github-actions](https://github.com/pkp/pkp-github-actions) a cada push), com os
+comandos da seção em inglês. A suíte cobre as classes contra o PKP instalado, o plugin encontrado
+pelo registro de plugins, os limites das configurações, os títulos gravados, o cache por idioma, a
+renderização sem consulta por artigo, o escape no bloco, o nível do site sem configurações e as 38
+traduções; o Cypress confere os limites e, com estatísticas, o bloco que o leitor vê. Verificado no
+OJS 3.5.0.3 e 3.4.0.10.
+
+Os testes ficam no repositório e não fazem parte do pacote da release.
 
 ### Créditos e autoria
 
@@ -131,6 +147,12 @@ quantidade configurada, título escapado e valores fora dos limites recusados.
   (**[@ajnyga](https://github.com/ajnyga)**, <https://github.com/ajnyga/mostRead>), com
   contribuições de **[@zielaq](https://github.com/zielaq)**.
 - Distribuído sob a **GNU GPL v3**, coerente com o licenciamento original.
+
+### Uso de IA
+
+Foi usada IA generativa (Claude, da Anthropic) para escrever e rodar testes, melhorar o código e
+alinhá-lo aos padrões da PKP. Toda mudança é revisada e testada pela OJSBR, que responde pelas
+releases publicadas.
 
 ### Licença
 

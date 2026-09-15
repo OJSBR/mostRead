@@ -81,7 +81,7 @@ class MostReadSettingsForm extends Form
     }
 
     /**
-     * @copydoc Form::fetch()
+     * Render the form.
      *
      * @param null|mixed $template
      */
@@ -93,7 +93,7 @@ class MostReadSettingsForm extends Form
     }
 
     /**
-     * @copydoc Form::execute()
+     * Save the settings and empty the cached lists of the journal.
      */
     public function execute(...$functionArgs)
     {
