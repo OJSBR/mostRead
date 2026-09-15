@@ -1,8 +1,9 @@
 {**
- * plugins/blocks/mostRead/settingsForm.tpl
+ * plugins/blocks/mostRead/templates/settingsForm.tpl
  *
  * Copyright (c) 2014-2024 Simon Fraser University
  * Copyright (c) 2003-2024 John Willinsky
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * Most read plugin settings
@@ -26,9 +27,13 @@
 			{fbvElement type="text" label="plugins.blocks.mostRead.settings.days" id="mostReadDays" value=$mostReadDays}
 		{/fbvFormSection}
 
+		{fbvFormSection for="mostReadCount"}
+			{fbvElement type="text" label="plugins.blocks.mostRead.settings.count" id="mostReadCount" value=$mostReadCount}
+		{/fbvFormSection}
+
 		{fbvFormSection for="mostReadBlockTitle"}
 			{fbvElement type="text" label="plugins.blocks.mostRead.settings.blockTitle" id="mostReadBlockTitle" value=$mostReadBlockTitle multilingual=true}
-		{/fbvFormSection}		
+		{/fbvFormSection}
 
 	{/fbvFormArea}
 

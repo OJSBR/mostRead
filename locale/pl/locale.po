@@ -1,18 +1,15 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-09T10:36:44+02:00\n"
-"PO-Revision-Date: 2021-06-09T10:36:44+02:00\n"
-"Language: \n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: pl\n"
+
 
 msgid "plugins.blocks.mostRead.displayName"
-msgstr "Blok Najczęściej czytane
+msgstr "Blok Najczęściej czytan"
 
 msgid "plugins.blocks.mostRead.description"
 msgstr "Ten plugin pokazuje najczęściej czytane w bocznej kolumnie."
@@ -21,7 +18,7 @@ msgid "plugins.blocks.mostRead.blockTitle"
 msgstr "Najczęściej czytane w ostatnim tygodniu"
 
 msgid "plugins.blocks.mostRead.settings.title"
-msgstr "Ustawienia bloku Najczęściej czytane
+msgstr "Ustawienia bloku Najczęściej czytan"
 
 msgid "plugins.blocks.mostRead.settings.days"
 msgstr "Ilość dni"
@@ -31,3 +28,12 @@ msgstr "Tytuł bloku"
 
 msgid "plugins.blocks.mostRead.settings.saved"
 msgstr "Ustawienia plugin Najczęściej czytane zostały zapisane"
+
+msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
+msgstr "Podaj liczbę dni do uwzględnienia."
+
+msgid "plugins.blocks.mostRead.settings.count"
+msgstr "Liczba artykułów"
+
+msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
+msgstr "Podaj liczbę całkowitą większą lub równą 1."

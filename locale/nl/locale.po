@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: nl\n"
+
+
+msgid "plugins.blocks.mostRead.displayName"
+msgstr "Meest gelezen-blok"
+
+msgid "plugins.blocks.mostRead.description"
+msgstr "Deze plug-in toont de meest gelezen objecten in de zijbalk."
+
+msgid "plugins.blocks.mostRead.blockTitle"
+msgstr "Vorige week het meest gelezen"
+
+msgid "plugins.blocks.mostRead.settings.title"
+msgstr "Instellingen Meest gelezen-blok"
+
+msgid "plugins.blocks.mostRead.settings.days"
+msgstr "Aantal dagen"
+
+msgid "plugins.blocks.mostRead.settings.blockTitle"
+msgstr "Bloktitel"
+
+msgid "plugins.blocks.mostRead.settings.saved"
+msgstr "De instellingen van de plug-in Meest gelezen-blok zijn opgeslagen"
+
+msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
+msgstr "Voer het aantal dagen in dat moet worden meegeteld."
+
+msgid "plugins.blocks.mostRead.settings.count"
+msgstr "Aantal artikelen"
+
+msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
+msgstr "Voer een geheel getal groter dan of gelijk aan 1 in."

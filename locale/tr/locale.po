@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: tr\n"
+
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.displayName"
+msgstr "En Çok Okunanlar bloğu"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.description"
+msgstr "Bu eklenti, en çok okunan içerikleri yan çubukta gösterir."
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.blockTitle"
+msgstr "Geçen hafta en çok okunanlar"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.title"
+msgstr "En Çok Okunanlar bloğu ayarları"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.days"
+msgstr "Gün sayısı"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.blockTitle"
+msgstr "Blok başlığı"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.saved"
+msgstr "En Çok Okunanlar bloğu eklentisinin ayarları kaydedildi"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
+msgstr "Lütfen dikkate alınacak gün sayısını girin."
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.count"
+msgstr "Makale sayısı"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
+msgstr "Lütfen 1'e eşit veya 1'den büyük bir tam sayı girin."

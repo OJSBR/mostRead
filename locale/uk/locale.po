@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: uk\n"
+
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.displayName"
+msgstr "Блок «Найпопулярніше»"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.description"
+msgstr "Цей модуль показує найпопулярніші матеріали в бічній панелі."
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.blockTitle"
+msgstr "Найпопулярніше минулого тижня"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.title"
+msgstr "Налаштування блока «Найпопулярніше»"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.days"
+msgstr "Кількість днів"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.blockTitle"
+msgstr "Заголовок блока"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.saved"
+msgstr "Налаштування модуля «Найпопулярніше» збережено"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
+msgstr "Укажіть кількість днів, які враховувати."
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.count"
+msgstr "Кількість статей"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
+msgstr "Введіть ціле число, не менше за 1."

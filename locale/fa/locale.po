@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: fa\n"
+
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.displayName"
+msgstr "بلوک پرخواننده‌ترین‌ها"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.description"
+msgstr "این افزونه پرخواننده‌ترین موارد را در نوار کناری نشان می‌دهد."
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.blockTitle"
+msgstr "پرخواننده‌ترین‌های هفتهٔ گذشته"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.title"
+msgstr "تنظیمات بلوک پرخواننده‌ترین‌ها"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.days"
+msgstr "تعداد روزها"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.blockTitle"
+msgstr "عنوان بلوک"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.saved"
+msgstr "تنظیمات افزونهٔ بلوک پرخواننده‌ترین‌ها ذخیره شد"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
+msgstr "لطفاً تعداد روزهای موردنظر را وارد کنید."
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.count"
+msgstr "تعداد مقاله‌ها"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
+msgstr "لطفاً یک عدد صحیح بزرگ‌تر یا مساوی ۱ وارد کنید."

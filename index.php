@@ -9,13 +9,12 @@
  *
  * Copyright (c) 2014-2024 Simon Fraser University
  * Copyright (c) 2003-2024 John Willinsky
+ * Copyright (c) 2026 OJSBR (https://ojsbr.com)
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @ingroup plugins_blocks_mostRead
- * @brief Wrapper for "Most Read" block plugin.
  *
+ * @brief Wrapper for "Most Read" block plugin.
  */
 
- return new APP\plugins\blocks\mostRead\MostReadBlockPlugin();
-
-?>
+return new APP\plugins\blocks\mostRead\MostReadBlockPlugin();

@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: ro\n"
+
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.displayName"
+msgstr "Bloc „Cele mai citite”"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.description"
+msgstr "Acest modul afișează obiectele cele mai citite în bara laterală."
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.blockTitle"
+msgstr "Cele mai citite săptămâna trecută"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.title"
+msgstr "Setările blocului „Cele mai citite”"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.days"
+msgstr "Numărul de zile"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.blockTitle"
+msgstr "Titlul blocului"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.saved"
+msgstr "Setările modulului Bloc „Cele mai citite” au fost salvate"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
+msgstr "Introduceți numărul de zile care trebuie luate în calcul."
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.count"
+msgstr "Numărul de articole"
+
+#, fuzzy
+msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
+msgstr "Introduceți un număr întreg mai mare sau egal cu 1."

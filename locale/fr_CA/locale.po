@@ -1,15 +1,12 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-24T10:36:44+02:00\n"
-"PO-Revision-Date: 2024-07-24T10:36:44+02:00\n"
-"Language: \n"
+"Last-Translator: OJSBR\n"
+"Language-Team: OJSBR\n"
+"Language: fr_CA\n"
+
 
 msgid "plugins.blocks.mostRead.displayName"
 msgstr "Bloc &laquo;Le plus lu&raquo;"
@@ -21,13 +18,22 @@ msgid "plugins.blocks.mostRead.blockTitle"
 msgstr "Articles les plus lus la semaine dernière"
 
 msgid "plugins.blocks.mostRead.settings.title"
-msgstr ""
+msgstr "Réglages du bloc des plus consultés"
 
 msgid "plugins.blocks.mostRead.settings.days"
-msgstr ""
+msgstr "Nombre de jours"
 
 msgid "plugins.blocks.mostRead.settings.blockTitle"
-msgstr ""
+msgstr "Titre du bloc"
 
 msgid "plugins.blocks.mostRead.settings.saved"
-msgstr ""
+msgstr "Les réglages du module Bloc des plus consultés ont été enregistrés"
+
+msgid "plugins.blocks.mostRead.settings.mostReadDaysRequired"
+msgstr "Veuillez saisir le nombre de jours à considérer."
+
+msgid "plugins.blocks.mostRead.settings.count"
+msgstr "Nombre d'articles"
+
+msgid "plugins.blocks.mostRead.settings.mostReadCountInvalid"
+msgstr "Veuillez saisir un nombre entier supérieur ou égal à 1."
