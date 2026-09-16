@@ -101,4 +101,13 @@ class MostReadTest extends PKPTestCase
         $this->expectExceptionMessage('Unhandled management action!');
         $plugin->manage([], $request);
     }
+
+    public function testTheLinkGoesToTheReaderPageOfEachApplication(): void
+    {
+        $source = (string) file_get_contents(dirname(__DIR__) . '/MostReadBlockPlugin.php');
+        // OJS opens the article; OMP opens the monograph in the catalogue.
+        $this->assertStringContainsString("Application::get()->getName() === 'omp'", $source);
+        $this->assertStringContainsString("'catalog', 'book'", $source);
+        $this->assertStringContainsString("'article', 'view'", $source);
+    }
 }

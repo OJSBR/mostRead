@@ -141,7 +141,7 @@ class MostReadBlockPlugin extends BlockPlugin
         $mostRead = [];
         foreach ($items as $item) {
             $mostRead[] = [
-                'url' => $request->url($context->getPath(), 'article', 'view', [$item['bestId']]),
+                'url' => $this->submissionUrl($request, $context, $item['bestId']),
                 'metric' => $item['metric'],
                 'title' => $item['title'],
             ];
@@ -154,6 +154,17 @@ class MostReadBlockPlugin extends BlockPlugin
         ]);
 
         return parent::getContents($templateMgr, $request);
+    }
+
+    /**
+     * The reader's page of a published submission: OJS opens the article, OMP the
+     * monograph in the catalogue.
+     */
+    protected function submissionUrl($request, $context, string $bestId): string
+    {
+        return Application::get()->getName() === 'omp'
+            ? $request->url($context->getPath(), 'catalog', 'book', [$bestId])
+            : $request->url($context->getPath(), 'article', 'view', [$bestId]);
     }
 
     /**

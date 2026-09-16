@@ -22,6 +22,7 @@ describe('Most Read block plugin', function() {
 	const withStatistics = Cypress.env('withStatistics');
 
 	const rowName = 'mostreadblockplugin';
+	let originalSidebar = null;
 	const settingsForm = 'form[id="mostReadSettingsForm"]';
 	const field = (name) => settingsForm + ' input[name="' + name + '"]';
 
@@ -121,6 +122,22 @@ describe('Most Read block plugin', function() {
 		waitJQuery();
 	};
 
+	// The journal of contextPath with all its settings, and the CSRF token of the page.
+	const withJournal = (callback) => {
+		cy.window({timeout: 60000}).its('pkp.currentUser.csrfToken').then((token) => {
+			api('/index.php/index/api/v1/contexts?count=100').then((list) => {
+				const journal = list.items.find((item) => item.urlPath === contextPath);
+				api(pageUrl('api/v1/contexts/' + journal.id)).then((details) => callback(details, token));
+			});
+		});
+	};
+
+	const saveSidebar = (journal, token, sidebar) => api(pageUrl('api/v1/contexts/' + journal.id), {
+		method: 'PUT',
+		headers: {'Content-Type': 'application/json', 'X-Csrf-Token': token},
+		body: JSON.stringify({sidebar: sidebar}),
+	});
+
 	it('Refuses days and counts outside their limits and saves valid ones', function() {
 		login(adminUser, adminPassword);
 		openPluginsTab();
@@ -151,12 +168,36 @@ describe('Most Read block plugin', function() {
 	});
 
 	(withStatistics ? it : it.skip)('Shows the reader published articles with their counts', function() {
+		login(adminUser, adminPassword);
+		cy.visit(pageUrl('management/settings/website') + '?reload=' + Date.now() + '#plugins');
+		withJournal((journal, token) => {
+			originalSidebar = journal.sidebar || [];
+			if (!originalSidebar.includes(rowName)) {
+				saveSidebar(journal, token, originalSidebar.concat([rowName]));
+			}
+		});
+
+		cy.clearCookies();
 		cy.visit(pageUrl('') + '?reload=' + Date.now());
 		cy.get('.block_most_read .most_read_article', {timeout: 30000}).should('have.length.at.least', 1).each(($item) => {
-			cy.wrap($item).find('a').should('have.attr', 'href').and('match', /\/article\/view\//);
+			// OJS opens the article; OMP opens the monograph in the catalogue. The link is
+			// followed, so a page of the wrong application is caught instead of just matching.
+			cy.wrap($item).find('a').should('have.attr', 'href').and('match', /\/(article\/view|catalog\/book)\//).then((href) => {
+				request({url: href, failOnStatusCode: false}).its('status').should('eq', 200);
+			});
 			cy.wrap($item).find('.most_read_article_journal').invoke('text').should('match', /\d/);
 			// Only the safe HTML of a title reaches the page.
 			cy.wrap($item).find('.most_read_article_title script').should('have.length', 0);
 		});
+	});
+
+	// Puts the sidebar back as it was, also when a test failed.
+	after(function() {
+		if (originalSidebar === null || originalSidebar.includes(rowName)) {
+			return;
+		}
+		login(adminUser, adminPassword);
+		cy.visit(pageUrl('management/settings/website') + '?reload=' + Date.now() + '#plugins');
+		withJournal((journal, token) => saveSidebar(journal, token, originalSidebar));
 	});
 });
