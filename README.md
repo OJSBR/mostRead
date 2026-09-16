@@ -1,13 +1,10 @@
 # Most Read — OJS block plugin
 
 [![OJS](https://img.shields.io/badge/OJS-3.4%20%7C%203.5-brightgreen)](https://pkp.sfu.ca/ojs/)
-[![Version](https://img.shields.io/badge/version-3.5.0.6-blue)](version.xml)
+[![Version](https://img.shields.io/badge/version-3.5.0.7-blue)](version.xml)
 [![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)](LICENSE)
 
-**⬇️ Install package:** [OJS 3.5](https://github.com/OJSBR/mostRead/releases/download/3.5.0.6/mostRead-3.5.0.6.tar.gz) · [OJS 3.4](https://github.com/OJSBR/mostRead/releases/download/3.4.0.4/mostRead-3.4.0.4.tar.gz) — or browse all [Releases](../../releases).
-
-> **This is the `stable-3_4_0` branch (OJS 3.4).** For OJS 3.5 use the
-> [`stable-3_5_0`](../../tree/stable-3_5_0) branch.
+**⬇️ Install package:** [OJS / OMP 3.5](https://github.com/OJSBR/mostRead/releases/download/3.5.0.7/mostRead-3.5.0.7.tar.gz) · [OJS 3.4](https://github.com/OJSBR/mostRead/releases/download/3.4.0.4/mostRead-3.4.0.4.tar.gz) — or browse all [Releases](../../releases).
 
 A block plugin for **Open Journal Systems (OJS)** that adds a **"most read articles"**
 section to the frontend sidebar. By default the block shows the 5 most-viewed articles of
@@ -20,12 +17,16 @@ full-text view count. The journal manager can set a custom heading and a custom 
 
 ## Compatibility & branches
 
-| OJS version | Branch | Plugin release |
+| Application | Branch | Plugin release |
 |-------------|--------|----------------|
-| OJS 3.5.x   | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 3.5.0.6 |
-| OJS 3.4.x   | [`stable-3_4_0`](../../tree/stable-3_4_0) | 3.4.0.4 |
+| OJS 3.5.x and OMP 3.5.x | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 3.5.0.7 |
+| OJS 3.4.x | [`stable-3_4_0`](../../tree/stable-3_4_0) | 3.4.0.4 |
 
-Both branches ship the same code; the locale folders follow each OJS line (38 languages).
+Both branches ship the same code; the locale folders follow each PKP line (38 languages).
+
+> Since 3.5.0.7 the same package serves OJS and OMP: on a press the block lists the most read
+> monographs and links to the catalogue. The former `mostReadOmp` repository is archived; its
+> releases stay available there.
 
 ## Installation
 
@@ -46,7 +47,9 @@ In the plugin settings the journal manager sets:
 ## How it works (technical)
 
 - The totals come from the publication statistics service (downloads of submission files in
-  the window, ending yesterday, as the core counts them); only published articles are listed.
+  the window, ending yesterday, as the core counts them); only published submissions are listed.
+- The link goes to the reader's page of each application: the article in OJS, the monograph in
+  the catalogue in OMP.
 - The list is cached per journal and language as it is rendered — best id, count and title —
   for one day, so a page view costs one cache read instead of one query per article. Saving
   the settings clears the cache of every language of the journal.
@@ -110,17 +113,17 @@ acessos. O gestor pode definir um título personalizado e a janela de dias.
 > plugin comunitário original de **Antti-Jussi Nygård (@ajnyga)**, com contribuições de
 > **@zielaq**. Veja a seção [Créditos e autoria](#créditos-e-autoria) abaixo.
 
-> **Esta é a branch `stable-3_4_0` (OJS 3.4).** Para o OJS 3.5 use a branch
-> [`stable-3_5_0`](../../tree/stable-3_5_0).
-
 ### Compatibilidade e branches
 
-| Versão do OJS | Branch | Release do plugin |
-|---------------|--------|-------------------|
-| OJS 3.5.x     | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 3.5.0.6 |
-| OJS 3.4.x     | [`stable-3_4_0`](../../tree/stable-3_4_0) | 3.4.0.4 |
+| Aplicação | Branch | Release do plugin |
+|-----------|--------|-------------------|
+| OJS 3.5.x e OMP 3.5.x | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 3.5.0.7 |
+| OJS 3.4.x | [`stable-3_4_0`](../../tree/stable-3_4_0) | 3.4.0.4 |
 
-As duas branches têm o mesmo código; as pastas de idioma seguem cada linha do OJS (38 idiomas).
+As duas branches têm o mesmo código; as pastas de idioma seguem cada linha do PKP (38 idiomas).
+
+> A partir da 3.5.0.7 o mesmo pacote serve OJS e OMP: numa editora o bloco lista os livros mais
+> lidos e leva ao catálogo. O antigo `mostReadOmp` está arquivado; as releases dele continuam lá.
 
 ### Instalação
 
