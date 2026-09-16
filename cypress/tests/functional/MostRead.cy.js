@@ -98,6 +98,12 @@ describe('Most Read block plugin', function() {
 		cy.get('input[id^="select-cell-' + rowName + '-enabled"]').should('be.checked');
 	};
 
+	// The form is only the plugin's once its PKP handler is attached: a Save clicked before
+	// that submits the form natively and leaves the page for the grid's manage URL.
+	const waitFormHandler = (formSelector) => cy.window({timeout: 30000}).should((win) => {
+		expect(win.jQuery(formSelector).data('pkp.handler'), 'form handler').to.exist;
+	});
+
 	// Opens the settings modal from the grid, without reloading the page: a reload right
 	// after saving can stall the web server of PKP's CI. The form is fetched each time.
 	const openPluginSettings = (rowName, formSelector) => {
@@ -109,9 +115,7 @@ describe('Most Read block plugin', function() {
 		// The grid may still be animating the extras row: the link is clicked once it exists.
 		cy.get('a[id*="-row-' + rowName + '-settings-button-"]').first().click({force: true});
 		waitJQuery();
-		cy.window().should((win) => {
-			expect(win.jQuery(formSelector).data('pkp.handler')).to.exist;
-		});
+		waitFormHandler(formSelector);
 	};
 
 	// ---- end of helpers ----
@@ -119,6 +123,8 @@ describe('Most Read block plugin', function() {
 	const openSettings = () => openPluginSettings(rowName, settingsForm);
 
 	const fill = (days, count) => {
+		// After a failed validation the modal replaces the form: wait for its handler again.
+		waitFormHandler(settingsForm);
 		cy.get(field('mostReadDays')).invoke('val', days || '');
 		cy.get(field('mostReadCount')).invoke('val', count || '');
 		cy.get(settingsForm + ' button[id^="submitFormButton-"]').click({force: true});
