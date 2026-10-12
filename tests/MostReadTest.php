@@ -48,6 +48,18 @@ class MostReadTest extends PKPTestCase
         $this->assertSame([], MostReadBlockPlugin::decodeTitles('not json'));
     }
 
+    public function testTitlesJoinedByNoBreakSpacesCanWrap(): void
+    {
+        $nbsp = "\u{00A0}";
+        $this->assertSame(
+            'Periodização nutricional e <em>modulação</em> metabólica: estratégias',
+            MostReadBlockPlugin::readableTitle("Periodização{$nbsp}nutricional&nbsp;e&#160;<em>modulação</em>\nmetabólica:{$nbsp}{$nbsp}estratégias ")
+        );
+        $this->assertSame('Hipertrofia Muscular', MostReadBlockPlugin::readableTitle('Hipertrofia Muscular'));
+        $template = (string) file_get_contents(dirname(__DIR__) . '/templates/block.tpl');
+        $this->assertStringContainsString('overflow-wrap: anywhere', $template);
+    }
+
     public function testTheListIsCachedPerJournalAndLanguage(): void
     {
         $plugin = new MostReadBlockPlugin();

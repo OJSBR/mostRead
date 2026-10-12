@@ -143,7 +143,7 @@ class MostReadBlockPlugin extends BlockPlugin
             $mostRead[] = [
                 'url' => $this->submissionUrl($request, $context, $item['bestId']),
                 'metric' => $item['metric'],
-                'title' => $item['title'],
+                'title' => self::readableTitle($item['title']),
             ];
         }
 
@@ -185,6 +185,20 @@ class MostReadBlockPlugin extends BlockPlugin
     public static function boundedInt($value, int $default, int $max): int
     {
         return ctype_digit(trim((string) $value)) && (int) $value >= 1 ? min((int) $value, $max) : $default;
+    }
+
+    /**
+     * A title that wraps in a narrow sidebar. Titles pasted from a word processor often join their
+     * words with no-break spaces (U+00A0 or the &nbsp; entity), which turns the whole title into one
+     * word that cannot wrap and runs out of the block. Those spaces and line breaks become plain
+     * spaces; the rest of the HTML (italics, sub/superscript) is kept.
+     */
+    public static function readableTitle(string $title): string
+    {
+        $title = str_ireplace(['&nbsp;', '&#160;', '&#xa0;'], ' ', $title);
+        $title = preg_replace('/[\s\x{00A0}\x{2007}\x{202F}]+/u', ' ', $title) ?? $title;
+
+        return trim($title);
     }
 
     /**

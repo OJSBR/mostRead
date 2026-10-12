@@ -1,10 +1,10 @@
 # Most Read — OJS block plugin
 
 [![OJS](https://img.shields.io/badge/OJS-3.4%20%7C%203.5-brightgreen)](https://pkp.sfu.ca/ojs/)
-[![Version](https://img.shields.io/badge/version-3.5.0.7-blue)](version.xml)
+[![Version](https://img.shields.io/badge/version-3.5.0.8-blue)](version.xml)
 [![License](https://img.shields.io/badge/license-GPL--3.0-lightgrey)](LICENSE)
 
-**⬇️ Install package:** [OJS / OMP 3.5](https://github.com/OJSBR/mostRead/releases/download/3.5.0.7/mostRead-3.5.0.7.tar.gz) · [OJS 3.4](https://github.com/OJSBR/mostRead/releases/download/3.4.0.4/mostRead-3.4.0.4.tar.gz) — or browse all [Releases](../../releases).
+**⬇️ Install package:** [OJS / OMP 3.5](https://github.com/OJSBR/mostRead/releases/download/3.5.0.8/mostRead-3.5.0.8.tar.gz) · [OJS 3.4](https://github.com/OJSBR/mostRead/releases/download/3.4.0.4/mostRead-3.4.0.4.tar.gz) — or browse all [Releases](../../releases).
 
 A block plugin for **Open Journal Systems (OJS)** that adds a **"most read articles"**
 section to the frontend sidebar. By default the block shows the 5 most-viewed articles of
@@ -19,7 +19,7 @@ full-text view count. The journal manager can set a custom heading and a custom 
 
 | Application | Branch | Plugin release |
 |-------------|--------|----------------|
-| OJS 3.5.x and OMP 3.5.x | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 3.5.0.7 |
+| OJS 3.5.x and OMP 3.5.x | [`stable-3_5_0`](../../tree/stable-3_5_0) *(default)* | 3.5.0.8 |
 | OJS 3.4.x | [`stable-3_4_0`](../../tree/stable-3_4_0) | 3.4.0.4 |
 
 Both branches ship the same code; the locale folders follow each PKP line (38 languages).
@@ -55,6 +55,10 @@ In the plugin settings the journal manager sets:
   the settings clears the cache of every language of the journal.
 - A non-numeric or out-of-range stored value falls back to the default instead of turning the
   window into "all time" or the list into thousands of rows.
+- Titles always wrap inside the block. Titles pasted from a word processor often join their
+  words with no-break spaces, which made a long title one unbreakable word that ran out of the
+  sidebar; since 3.5.0.8 those spaces and line breaks are shown as plain spaces, and a word longer
+  than the block breaks instead of overflowing.
 
 ## Tests
 
@@ -117,7 +121,7 @@ acessos. O gestor pode definir um título personalizado e a janela de dias.
 
 | Aplicação | Branch | Release do plugin |
 |-----------|--------|-------------------|
-| OJS 3.5.x e OMP 3.5.x | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 3.5.0.7 |
+| OJS 3.5.x e OMP 3.5.x | [`stable-3_5_0`](../../tree/stable-3_5_0) *(padrão)* | 3.5.0.8 |
 | OJS 3.4.x | [`stable-3_4_0`](../../tree/stable-3_4_0) | 3.4.0.4 |
 
 As duas branches têm o mesmo código; as pastas de idioma seguem cada linha do PKP (38 idiomas).
@@ -136,6 +140,11 @@ plugin e habilite o bloco **Artigos mais lidos** nas configurações da barra la
 **Dias** (1 a 3650, padrão 7), **número de artigos** (1 a 50, padrão 5) e **título do bloco**
 por idioma, em texto puro. A lista é guardada em cache por revista e idioma já pronta para exibir
 (um dia), e salvar as configurações limpa o cache.
+
+Desde a 3.5.0.8 os títulos sempre quebram linha dentro do bloco. Título colado de editor de texto
+costuma ligar as palavras com espaço não separável (`&nbsp;`), o que transformava um título longo em
+uma palavra só, que estourava a barra lateral; agora esses espaços e as quebras de linha viram
+espaços comuns, e uma palavra maior que o bloco é quebrada em vez de transbordar.
 
 ### Testes
 
